@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Tour extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'travel_id',
@@ -21,12 +23,12 @@ class Tour extends Model
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (int $value) => $value * 100,
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
         );
     }
 
-    public function travel()
+    public function travel(): BelongsTo
     {
         return $this->belongsTo(Travel::class);
     }
