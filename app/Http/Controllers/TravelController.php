@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TravelResource;
 use App\Models\Travel;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class TravelController extends Controller
     {
         $travels = Travel::where('is_public', true)->paginate(5);
 
-        return $travels;
+        return TravelResource::collection($travels);
     }
 
     /**
